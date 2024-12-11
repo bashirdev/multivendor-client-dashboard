@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import { Toaster } from 'react-hot-toast';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import store from './store/index';
+const App = lazy(()=> import('./App'));
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
+
+  <React.StrictMode>  
+  <BrowserRouter>
+  <Provider store={store}>
+    <Suspense> 
+        <App />
+        <Toaster 
+          toasterOptions={{
+            position:'top-right',
+            style:{
+              backgroundColor:'#283046',
+              color:'white'
+            }
+          }}
+        />
+    </Suspense>
+  </Provider>
+  </BrowserRouter>
   </React.StrictMode>
 );
 
